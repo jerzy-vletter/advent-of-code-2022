@@ -7,6 +7,7 @@ part2 = []
 
 answer = []
 score = 0
+counter = 0
 
 # storage arrays
 inp = []
@@ -25,35 +26,41 @@ for line in setup:
     finally:
         pass
 
-def main(inp, answer, score):
+def main(inp, answer, score, counter):
 
         for i, value in enumerate(inp):
-            end = len(inp)-1
+            end = len(inp)
             if(i != end):
-                string1 = value[:len(value)//2]
-                string2 = value[len(value)//2:]
-                
-                compare(string1, string2, answer)
-            else:
-                pass
-            if(i == end):
-                string1 = value[:len(value)//2]
-                string2 = value[len(value)//2:]
-                
-                compare(string1, string2, answer)
+                if((i+2)!= end):
+                    string1 = inp[counter]
+                    string2 = inp[counter+1]
+                    string3 = inp[counter+2]
+
+                    counter = counter+3
+                    compare(string1, string2, string3, answer)
+                else:
+                    string1 = inp[counter]
+                    string2 = inp[counter+1]
+                    string3 = inp[counter+2]
+                    compare(string1, string2, string3, answer)
+            if(counter == end):
+                break
         points(answer, lowerCase, upperCase, lowerScores, upperScores, score)
 
-def compare(string1, string2, answer):
+def compare(string1, string2, string3, answer):
+
 
         a_len = len(string1)
         b_len = len(string2)
+        c_len = len(string3)
 
         for a in string1:
             for b in string2:
-
-                if a == b:
-                    answer.append(b)
-                    return
+                for c in string3:
+                    
+                    if ((a == b) and (b == c)):
+                        answer.append(c)
+                        return
 
 def points(answer, lowerCase, upperCase, lowerScores, upperScores, score):
 
@@ -70,4 +77,4 @@ def points(answer, lowerCase, upperCase, lowerScores, upperScores, score):
                 print(i, "error")
         print(score)
 
-main(inp, answer, score)
+main(inp, answer, score, counter)
